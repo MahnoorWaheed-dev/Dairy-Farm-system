@@ -1,0 +1,192 @@
+<%- include('partials/header') %>
+
+<style>
+    @media print {
+        .no-print { display: none !important; }
+        body { background: white !important; }
+    }
+</style>
+
+<div class="min-h-screen  bg-slate-100 p-4 md:p-8 flex flex-col justify-center items-center">
+    
+    <!-- Action Bar -->
+    <div class="max-w-3xl w-full flex justify-between items-center mb-6 no-print">
+        <a href="/shops" class="text-sm font-bold text-gray-600 hover:text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Back to Shops
+        </a>
+        <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-5 py-2 rounded-xl shadow transition flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-print"></i> Print Receipt
+        </button>
+    </div>
+
+    <!-- Receipt Container (Dual Copy: Customer + Owner) -->
+    <div class="max-w-3xl w-full space-y-6">
+        
+       <!-- COPY 1: CUSTOMER COPY -->
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-2 border-[#0F172A] receipt-card relative text-slate-800 my-4">
+    
+    <!-- Top Right Copy Tag -->
+    <div class="absolute top-4 right-4 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase px-3  rounded-full tracking-wider no-print border border-slate-200">
+        Customer Copy
+    </div>
+
+    <!-- Header Section (Fixed Flex Overlap & Large Logo) -->
+    <div class="flex flex-col sm:flex-row items-center justify-between border-b-2 border-slate-800 pb-4 mb-5 gap-4">
+        
+        <!-- Receipt Number Box -->
+        <div class="border-2 border-[#0F172A] px-3 py-1.5 font-bold text-[#0F172A] text-sm rounded-lg bg-slate-50 shrink-0 self-start sm:self-center">
+            No. <%= transaction.receiptNumber %>
+        </div>
+
+        <!-- Center Branding with Large Readable Logo -->
+        <div class="flex items-center gap-4 flex-1 justify-center sm:justify-start">
+            <!-- Large Prominent Logo Container -->
+            <div class="w-24 h-25 rounded-xl flex items-center justify-center overflow-hidden  bg-white shadow-md shrink-0">
+                <img src="/assets/shopping-centre-logo.png" alt="Mangrio Logo" class="w-full h-full object-contain" />
+            </div>
+            
+            <div class="text-left">
+                <h2 class="text-xl sm:text-2xl font-bold text-[#0F172A] leading-tight tracking-wide">
+                    MANGRIO SHOPPING CENTRE
+                </h2>
+                <span class="bg-[#00B4B4] text-white text-xs font-medium px-3 py-0.5 rounded-full inline-block mt-1 shadow-sm">
+                    Official Rent Receipt
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Form Lines (Fixed Overlapping Layout) -->
+    <div class="space-y-4 mb-6 text-sm font-medium">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div class="flex items-center gap-2 w-full sm:flex-1">
+                <span class="shrink-0 text-slate-700">Rent Month:</span>
+                <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900 font-semibold text-base text-center"><%= transaction.rentMonth %></span>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-48">
+                <span class="shrink-0 text-slate-700">Date:</span>
+                <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900 font-semibold text-center"><%= new Date(transaction.paymentDate).toLocaleDateString('en-GB') %></span>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+            <span class="shrink-0 text-slate-700">Amount Paid:</span>
+            <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-[#00B4B4] font-bold text-lg">Rs. <%= transaction.amountPaid.toLocaleString() %>/-</span>
+            <span class="text-xs text-slate-500 font-normal shrink-0">(Shop No: #<%= transaction.shopId.shopNumber %>)</span>
+        </div>
+
+        <!-- Receiver Name Line -->
+<div class="flex items-center gap-2">
+    <span class="shrink-0 text-slate-700 font-bold">Receiver Name & Sign:</span>
+    <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900 font-semibold">
+        <%= transaction.receivedBy %>
+    </span>
+</div>
+
+        <div class="flex items-center gap-2">
+            <span class="shrink-0 text-slate-700">Shopkeeper Name & Sign:</span>
+            <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900"><%= transaction.shopId.personName %></span>
+        </div>
+    </div>
+
+    <!-- Footer Details -->
+    <div class="flex flex-col sm:flex-row justify-between items-center pt-3 border-t border-slate-300 text-xs text-slate-700 gap-2">
+        <div>
+            <span>Proprietor:</span> <span class="font-semibold text-slate-900">Haji Muhammad Ramadan Mangrio</span>
+            <span class="text-slate-500 ml-2">Mob: 0329-4029786</span>
+        </div>
+        <div class="bg-slate-100 px-3 py-1 rounded text-[11px] border border-slate-200 text-slate-600">
+            Note: Please collect receipt upon rent payment.
+        </div>
+    </div>
+
+</div>
+
+        <!-- Cut Line Divider -->
+        <div class="border-b-2 border-dashed border-gray-400 relative text-center no-print">
+            <span class="bg-gray-100 px-3 text-xs text-gray-500 font-bold relative -top-2">✂ Cut Here</span>
+        </div>
+
+        <!-- COPY 2: OWNER COPY -->
+       <div class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-2 border-[#0F172A] receipt-card relative text-slate-800 my-4">
+    
+    <!-- Top Right Copy Tag -->
+    <div class="absolute top-4 right-4 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase px-3  rounded-full tracking-wider no-print border border-slate-200">
+        Owner Copy
+    </div>
+
+    <!-- Header Section (Fixed Flex Overlap & Large Logo) -->
+    <div class="flex flex-col sm:flex-row items-center justify-between border-b-2 border-slate-800 pb-4 mb-5 gap-4">
+        
+        <!-- Receipt Number Box -->
+        <div class="border-2 border-[#0F172A] px-3 py-1.5 font-bold text-[#0F172A] text-sm rounded-lg bg-slate-50 shrink-0 self-start sm:self-center">
+            No. <%= transaction.receiptNumber %>
+        </div>
+
+        <!-- Center Branding with Large Readable Logo -->
+        <div class="flex items-center gap-4 flex-1 justify-center sm:justify-start">
+            <!-- Large Prominent Logo Container -->
+            <div class="w-24 h-25 rounded-xl flex items-center justify-center overflow-hidden  bg-white shadow-md shrink-0">
+                <img src="/assets/shopping-centre-logo.png" alt="Mangrio Logo" class="w-full h-full object-contain" />
+            </div>
+            
+            <div class="text-left">
+                <h2 class="text-xl sm:text-2xl font-bold text-[#0F172A] leading-tight tracking-wide">
+                    MANGRIO SHOPPING CENTRE
+                </h2>
+                <span class="bg-[#00B4B4] text-white text-xs font-medium px-3 py-0.5 rounded-full inline-block mt-1 shadow-sm">
+                    Official Rent Receipt
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Form Lines (Fixed Overlapping Layout) -->
+    <div class="space-y-4 mb-6 text-sm font-medium">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div class="flex items-center gap-2 w-full sm:flex-1">
+                <span class="shrink-0 text-slate-700">Rent Month:</span>
+                <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900 font-semibold text-base text-center"><%= transaction.rentMonth %></span>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-48">
+                <span class="shrink-0 text-slate-700">Date:</span>
+                <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900 font-semibold text-center"><%= new Date(transaction.paymentDate).toLocaleDateString('en-GB') %></span>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+            <span class="shrink-0 text-slate-700">Amount Paid:</span>
+            <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-[#00B4B4] font-bold text-lg">Rs. <%= transaction.amountPaid.toLocaleString() %>/-</span>
+            <span class="text-xs text-slate-500 font-normal shrink-0">(Shop No: #<%= transaction.shopId.shopNumber %>)</span>
+        </div>
+<!-- Receiver Name Line -->
+<div class="flex items-center gap-2">
+    <span class="shrink-0 text-slate-700 font-bold">Receiver Name & Sign:</span>
+    <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900 font-semibold">
+        <%= transaction.receivedBy %>
+    </span>
+</div>
+
+        <div class="flex items-center gap-2">
+            <span class="shrink-0 text-slate-700">Shopkeeper Name & Sign:</span>
+            <span class="flex-1 border-b-2 border-dashed border-slate-400 px-2 text-slate-900"><%= transaction.shopId.personName %></span>
+        </div>
+    </div>
+
+    <!-- Footer Details -->
+    <div class="flex flex-col sm:flex-row justify-between items-center pt-3 border-t border-slate-300 text-xs text-slate-700 gap-2">
+        <div>
+            <span>Proprietor:</span> <span class="font-semibold text-slate-900">Haji Muhammad Ramadan Mangrio</span>
+            <span class="text-slate-500 ml-2">Mob: 0329-4029786</span>
+        </div>
+        <div class="bg-slate-100 px-3 py-1 rounded text-[11px] border border-slate-200 text-slate-600">
+            Note: Please collect receipt upon rent payment.
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>

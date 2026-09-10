@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<div class="min-h-screen w-full flex flex-col md:flex-row bg-gray-100">
+    
+    <!-- Left Section: Dark Branding Panel (Full Height & 50% Width) -->
+    <div class="w-full md:w-1/2 bg-sidebarBg p-8 md:p-16 flex flex-col justify-between items-center text-center relative">
+        <div class="my-auto space-y-6">
+            <!-- HR Gold Box Logo -->
+           <!-- Main Dashboard Header (Kamran Dairy Farm & Girhori Farm) -->
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 p-6  max-w-4xl mx-auto my-6">
+    
+    <!-- White Logo Box with Soft Shadow -->
+    <div class="w-24 h-24 md:w-32 md:h-32  p-2 rounded-2xl shadow-lg flex items-center justify-center shrink-0 ring-2 ring-emerald-500/20">
+        <img 
+            src="/assets/dairy-farm-logo.png" 
+            alt="Kamran Dairy Farm and Girhori Farm Logo" 
+          class="w-full h-full object-contain transform scale-110 transition-transform"
+        />
+    </div>
+
+    <!-- Title & Proprietor Info -->
+    <div class="text-center md:text-left space-y-2">
+        <h1 class="text-2xl md:text-3xl font-black text-white tracking-wide leading-tight">
+            KAMRAN DAIRY FARM AND GIRHORI FARM DHORONARO
+        </h1>
+        <div class="inline-block  px-3 py-1 rounded-md">
+            <p class="text-teal-600 text-xs md:text-sm font-bold uppercase tracking-widest">
+                Proprietor: Haji Muhammad Ramzan Mangrio & Sons
+            </p>
+        </div>
+    </div>
+
+</div>
+        </div>
+
+        <div class="text-xs text-gray-500 font-medium">
+            © 2026 Business Management System. All rights reserved.
+        </div>
+    </div>
+
+    <!-- Right Section: Clean Form Area (Full Height & 50% Width) -->
+    <div class="w-full md:w-1/2 flex items-center justify-center p-8 md:p-16 bg-white">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-800 flex items-center gap-2">
+                    Welcome Back <span class="text-2xl">👋</span>
+                </h2>
+                <p class="text-sm text-gray-500 mt-2">Please enter your credentials to access the admin portal.</p>
+            </div>
+
+            <form action="/login" method="POST" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Username</label>
+                    <input type="text" name="username" required 
+                        class="w-full px-4 py-3.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandTeal focus:ring-2 focus:ring-brandTeal/20 transition bg-gray-50 text-gray-800" 
+                        placeholder="Enter your username">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Password</label>
+                    <input type="password" name="password" required 
+                        class="w-full px-4 py-3.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandTeal focus:ring-2 focus:ring-brandTeal/20 transition bg-gray-50 text-gray-800" 
+                        placeholder="Enter your password">
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 rounded-xl transition shadow-lg hover:shadow-xl text-base">
+                    Sign In
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>

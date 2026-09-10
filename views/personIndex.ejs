@@ -1,0 +1,241 @@
+<%- include('partials/header') %>
+
+<!-- Outer Wrapper: Desktop (lg: 1024px+) par flex-row, Tablet & iPad (below 1024px) par flex-col -->
+<div class="min-h-screen bg-gray-50 flex flex-col lg:flex-row w-full overflow-x-hidden">
+    <%- include('partials/sidebar') %>
+
+    <!-- Main Content Area: Margin 1024px (lg) par apply hoga taake 800px screen par dashboard na kate -->
+    <main  class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-8 w-full overflow-x-hidden min-w-0 main-content">
+        
+        <!-- Header Section -->
+        <header  class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
+
+            <!-- Brand Logo & Titles -->
+            <div class="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto ">
+                <div class="w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl  flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-1 overflow-hidden">
+                    <img src="/assets/dairy-farm-logo.png" alt="Mangrio Logo" class="w-full h-full object-contain" />
+                </div>
+
+                <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-brandTeal tracking-wider uppercase truncate">
+                           GIRHORI FARM DHORONARO
+                        </h2>
+                        <span class="text-[10px] sm:text-xs font-medium text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">
+                            Persons / Accounts
+                        </span>
+                    </div>
+                    <p class="text-xs sm:text-sm font-normal text-slate-300 mt-1 truncate">
+                      & KAMRAN DAIRY FARM <span class="text-slate-500 mx-1">|</span> Proprietor: Haji Muhammad Ramzan Mangrio
+                    </p>
+                </div>
+            </div>
+
+            <!-- Header Counter & Action Button -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto shrink-0">
+                <div class="bg-slate-900/90 border border-slate-700/80 px-3 py-2 rounded-xl flex items-center justify-between sm:justify-start gap-3 shadow-inner">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-brandTeal animate-pulse"></span>
+                        <span class="text-xs font-medium text-slate-300">Total Registered:</span>
+                        <span class="text-xs font-bold text-brandTeal">
+                            <%= typeof totalPerson !== 'undefined' ? totalPerson : (personList ? personList.length : 0) %>
+                        </span>
+                    </div>
+                </div>
+
+                <button onclick="document.getElementById('addPersonModal').classList.remove('hidden')"
+                    class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Add New Person</span>
+                </button>
+            </div>
+
+        </header>
+
+        <!-- Records Grid Container -->
+    <div class="space-y-3.5">
+    <% if (!personList || personList.length === 0) { %>
+        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center text-slate-500 font-medium shadow-xs">
+            No person records found. Click "Add New Person" to create your first record.
+        </div>
+    <% } else { %>
+        <% personList.forEach(person => { %>
+            <!-- Responsive Person Record Card -->
+            <div class="bg-white rounded-xl border border-slate-200/90 p-3.5 sm:p-4 shadow-xs hover:shadow-md transition-shadow duration-200">
+                
+                <!-- Top Info Bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4 border-b border-slate-100 pb-3 mb-3">
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight truncate">
+                            <%= person.name %>
+                        </h3>
+                        <p class="text-xs text-slate-600 mt-0.5 flex flex-wrap items-center gap-2 font-medium">
+                            <span>CNIC: <strong class="font-mono text-slate-900"><%= person.cnic %></strong></span>
+                            <span class="text-slate-300 hidden sm:inline">|</span>
+                            <span>Contact: <strong class="font-mono text-slate-900"><%= person.mobile %></strong></span>
+                        </p>
+                    </div>
+
+                    <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto shrink-0 mt-1 sm:mt-0 gap-1">
+                        <span class="text-[10px] font-bold uppercase text-slate-500 sm:hidden">Current Balance</span>
+                        <span class="text-xs sm:text-sm font-bold font-mono px-3 py-1 rounded-md border inline-block shadow-xs <%= person.currentBalance < 0 ? 'bg-rose-50 border-rose-200 text-rose-700' : 'bg-emerald-50 border-emerald-300 text-emerald-800' %>">
+                            Rs. <%= person.currentBalance ? person.currentBalance.toLocaleString() : 0 %>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Actions Bar: Transaction, Statement & Delete Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-end gap-2 pt-0.5">
+                    <!-- Add Ledger Transaction -->
+                    <button onclick="openTransactionModal('<%= person._id %>', '<%= person.name %>')"
+                        class="w-full sm:w-auto sm:flex-1 bg-slate-50 hover:bg-slate-100 border border-slate-300/80 text-slate-800 py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors duration-150 active:scale-98 whitespace-nowrap">
+                        <i class="fa-solid fa-right-left text-brandTeal text-sm"></i>
+                        <span>Add Ledger Transaction</span>
+                    </button>
+
+                    <!-- View Account Statement -->
+                    <a href="/person/statement/<%= person._id %>"
+                        class="w-full sm:w-auto sm:flex-1 bg-brandTeal hover:bg-teal-700 text-white py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all duration-150 shadow-xs hover:shadow-md active:scale-98 text-center whitespace-nowrap">
+                        <i class="fa-solid fa-file-invoice text-sm"></i>
+                        <span>View Statement</span>
+                    </a>
+
+                    <!-- Delete Person Form/Button -->
+             <!-- Form action URL updated to /person/delete/ID -->
+<form action="/person/delete/<%= person._id %>" method="POST" 
+    onsubmit="return confirm('Kya aap <%= person.name %> ko delete karna chahte hain?');" 
+    class="w-full sm:w-auto">
+    <button type="submit"
+        class="w-full sm:w-auto bg-rose-50 hover:bg-rose-600 border border-rose-200 text-rose-700 hover:text-white py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-98 whitespace-nowrap"
+        title="Delete Person">
+        <i class="fa-solid fa-trash-can text-sm"></i>
+        <span>Delete</span>
+    </button>
+</form>
+                </div>
+
+            </div>
+        <% }) %>
+    <% } %>
+</div>
+
+        <!-- Pagination Controls -->
+        <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+            <div class="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200 bg-white px-4 py-3 rounded-xl mt-6 shadow-sm gap-4">
+                <div class="text-center sm:text-left">
+                    <p class="text-xs text-slate-600">
+                        Showing Page <span class="font-bold text-slate-900"><%= currentPage %></span> of <span class="font-bold text-slate-900"><%= totalPages %></span>
+                    </p>
+                </div>
+
+                <nav class="inline-flex gap-1" aria-label="Pagination">
+                    <a href="/person?page=<%= currentPage - 1 %>"
+                        class="relative inline-flex items-center rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-slate-600 border border-slate-300 hover:bg-slate-100 transition-colors <%= currentPage === 1 ? 'pointer-events-none opacity-40' : '' %>">
+                        <i class="fa-solid fa-chevron-left mr-1"></i> Prev
+                    </a>
+
+                    <% for(let i = 1; i <= totalPages; i++) { %>
+                        <a href="/person?page=<%= i %>"
+                            class="relative inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors <%= currentPage === i ? 'bg-brandTeal text-white' : 'text-slate-700 border border-slate-300 hover:bg-slate-100' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+
+                    <a href="/person?page=<%= currentPage + 1 %>"
+                        class="relative inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-600 border border-slate-300 hover:bg-slate-100 transition-colors <%= currentPage === totalPages ? 'pointer-events-none opacity-40' : '' %>">
+                        Next <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </a>
+                </nav>
+            </div>
+        <% } %>
+
+    </main>
+</div>
+
+<!-- Add Person Modal -->
+<div id="addPersonModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <h3 class="text-base sm:text-lg font-bold text-gray-800">Add New Person</h3>
+            <button onclick="document.getElementById('addPersonModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <form action="/person/add" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name</label>
+                <input type="text" name="name" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-brandTeal" placeholder="e.g. Ali Raza">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">CNIC Number</label>
+                <input type="text" name="cnic" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-brandTeal" placeholder="41302-XXXXXXX-X">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Mobile / Contact Number</label>
+                <input type="text" name="mobile" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-brandTeal" placeholder="0300-1234567">
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+                <button type="button" onclick="document.getElementById('addPersonModal').classList.add('hidden')" class="px-4 py-2 text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-700">Cancel</button>
+                <button type="submit" class="px-5 py-2 text-xs sm:text-sm font-bold bg-brandTeal text-white rounded-lg shadow-md hover:bg-[#008F80]">Save Person</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Transaction Modal -->
+<div id="transactionModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <h3 class="text-base sm:text-lg font-bold text-gray-800">Add Ledger Entry</h3>
+            <button onclick="document.getElementById('transactionModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <form action="/person/transaction" method="POST" class="space-y-4">
+            <input type="hidden" id="transPersonId" name="personId">
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Person Name</label>
+                <input type="text" id="transPersonName" readonly class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm font-semibold cursor-not-allowed">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Transaction Type</label>
+                <select name="type" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-brandTeal bg-white font-medium text-gray-800">
+                    <option value="Debit">Debit (Diye - Account Minus)</option>
+                    <option value="Credit">Credit (Miley - Account Plus)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Amount (Rs.)</label>
+                <input type="number" step="any" name="amount" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-brandTeal" placeholder="0.00">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Description / Remarks</label>
+                <input type="text" name="description" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-brandTeal" placeholder="e.g. Cash payment / advance">
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+                <button type="button" onclick="document.getElementById('transactionModal').classList.add('hidden')" class="px-4 py-2 text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-700">Cancel</button>
+                <button type="submit" class="px-5 py-2 text-xs sm:text-sm font-bold bg-brandTeal text-white rounded-lg shadow-md hover:bg-[#008F80]">Post Transaction</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openTransactionModal(id, name) {
+        document.getElementById('transPersonId').value = id;
+        document.getElementById('transPersonName').value = name;
+        document.getElementById('transactionModal').classList.remove('hidden');
+    }
+</script>
+
+<%- include('partials/footer') %>
