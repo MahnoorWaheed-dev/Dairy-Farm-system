@@ -1,43 +1,43 @@
 const mongoose = require('mongoose');
 
-const gardenTransactionSchema = new mongoose.Schema({
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    title: {
-        type: String,
-        required: true
-    },
-    category: {
-        type: String,
-        enum: ['INCOME', 'EXPENSE'], // INCOME = Fasal Sale, EXPENSE = Khad/Worker/Transport
-        required: true
-    },
-    amount: {
-        type: Number,
-        required: true
-    },
-    notes: {
-        type: String
-    }
-});
-
 const gardenSchema = new mongoose.Schema({
-    name: {
+    gardenName: {
         type: String,
         required: true,
         trim: true
     },
-    cropType: {
+    location: {
         type: String,
-        enum: ['Mango', 'Banana', 'Other'],
-        required: true
+        trim: true
     },
     areaSize: {
-        type: String // e.g. "10 Acres"
+        type: String,
+        trim: true
     },
-    transactions: [gardenTransactionSchema]
+    cropType: {
+        type: String,
+        trim: true
+    },
+    status: {
+        type: String,
+        enum: ['Available', 'On Lease'],
+        default: 'Available'
+    },
+    // Active Lease Details
+    currentLease: {
+        contractor: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Person'
+        },
+        contractorName: String, // Custom / Direct Thekedar Name
+        startDate: Date,
+        endDate: Date,
+        totalAmount: Number,
+        advanceAmount: Number,
+        notes: String
+    }
 }, { timestamps: true });
+
+
 
 module.exports = mongoose.model('Garden', gardenSchema);

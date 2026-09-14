@@ -25,6 +25,11 @@ const personSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    role: { 
+        type: String, 
+        enum: ['Shop Keeper', 'Thekedar', 'Staff', 'Supplier', 'General'], 
+        default: 'General' 
+    },
     cnic: {
         type: String,
         required: true

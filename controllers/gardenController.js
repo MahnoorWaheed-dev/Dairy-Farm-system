@@ -1,75 +1,97 @@
 const Garden = require('../models/Garden');
+const Person = require('../models/Person');
 
-// GET: Display all gardens and summaries
+// Get All Gardens Page
 const getGardens = async (req, res) => {
     try {
-        const gardens = await Garden.find().sort({ createdAt: -1 });
+        const gardens = await Garden.find().populate('currentLease.contractor').sort({ createdAt: -1 });
+        const persons = await Person.find().sort({ name: 1 }); // For dropdown selection
 
-        const updatedGardens = gardens.map(garden => {
-            let totalIncome = 0;
-            let totalExpense = 0;
-
-            garden.transactions.forEach(t => {
-                if (t.category === 'INCOME') totalIncome += t.amount;
-                if (t.category === 'EXPENSE') totalExpense += t.amount;
-            });
-
-            return {
-                ...garden.toObject(),
-                totalIncome,
-                totalExpense,
-                netProfit: totalIncome - totalExpense
-            };
+        res.render('garden', {
+            title: 'Baghat / Garden Management',
+            gardens,
+            persons
         });
-
-        res.render('gardens', {
-            title: 'Agriculture & Baghaat Management',
-            user: req.session.user,
-            gardens: updatedGardens
-        });
-    } catch (error) {
-        console.error('Error fetching gardens:', error);
+    } catch (err) {
+        console.error('Error fetching gardens:', err);
         res.status(500).send('Server Error');
     }
 };
 
-// POST: Add New Garden
+// Add New Garden
 const addGarden = async (req, res) => {
     try {
-        const { name, cropType, areaSize } = req.body;
-        await Garden.create({ name, cropType, areaSize });
-        res.redirect('/gardens');
-    } catch (error) {
-        console.error('Error adding garden:', error);
-        res.status(500).send('Error adding garden');
+        const { gardenName, location, areaSize, cropType } = req.body;
+        await Garden.create({ gardenName, location, areaSize, cropType });
+        res.redirect('/garden');
+    } catch (err) {
+        console.error('Error adding garden:', err);
+        res.redirect('/garden');
     }
 };
 
-// POST: Add Income or Expense Entry
-const addGardenTransaction = async (req, res) => {
+// Assign Lease (Theka) to Garden
+const assignLease = async (req, res) => {
     try {
-        const { gardenId, title, category, amount, notes } = req.body;
+        const { gardenId, contractorId, contractorName, startDate, endDate, totalAmount, advanceAmount, notes } = req.body;
 
-        const garden = await Garden.findById(gardenId);
-        if (!garden) return res.status(404).send('Garden record not found');
+        const person = await Person.findById(contractorId);
+        if (!person) return res.redirect('/garden');
 
-        garden.transactions.push({
-            title,
-            category,
-            amount: Number(amount),
-            notes
+        // Agar user ne direct custom thekedar name enter kiya hai toh wo, warna Person account ka default name
+        const finalContractorName = contractorName && contractorName.trim() !== '' ? contractorName : person.name;
+
+        await Garden.findByIdAndUpdate(gardenId, {
+            status: 'On Lease',
+            currentLease: {
+                contractor: contractorId,
+                contractorName: finalContractorName,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate),
+                totalAmount: Number(totalAmount) || 0,
+                advanceAmount: Number(advanceAmount) || 0,
+                notes
+            }
         });
 
-        await garden.save();
-        res.redirect('/gardens');
-    } catch (error) {
-        console.error('Error adding garden transaction:', error);
-        res.status(500).send('Error adding transaction');
+        // Person account ledger entry (Khata person account)
+        if (person.transactions) {
+            person.transactions.push({
+                date: new Date(),
+                description: `Annual Garden Lease - ${finalContractorName}`,
+                debit: Number(totalAmount) || 0,
+                credit: Number(advanceAmount) || 0,
+                balance: (person.currentBalance || 0) + ((Number(totalAmount) || 0) - (Number(advanceAmount) || 0))
+            });
+            person.currentBalance = (person.currentBalance || 0) + ((Number(totalAmount) || 0) - (Number(advanceAmount) || 0));
+            await person.save();
+        }
+
+        res.redirect('/garden');
+    } catch (err) {
+        console.error('Error assigning lease:', err);
+        res.redirect('/garden');
+    }
+};
+
+// Release / End Lease
+const releaseLease = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Garden.findByIdAndUpdate(id, {
+            status: 'Available',
+            $unset: { currentLease: 1 }
+        });
+        res.redirect('/garden');
+    } catch (err) {
+        console.error('Error releasing lease:', err);
+        res.redirect('/garden');
     }
 };
 
 module.exports = {
     getGardens,
     addGarden,
-    addGardenTransaction
+    assignLease,
+    releaseLease
 };

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getGardens, addGarden, addGardenTransaction } = require('../controllers/gardenController');
-const isAuth = require('../middleware/isAuth');
+const gardenController = require('../controllers/gardenController');
 
-router.get('/', isAuth, getGardens);
-router.post('/add', isAuth, addGarden);
-router.post('/transaction', isAuth, addGardenTransaction);
+router.get('/', gardenController.getGardens);
+router.post('/add', gardenController.addGarden);
+router.post('/lease', gardenController.assignLease);
+router.post('/release/:id', gardenController.releaseLease);
 
+// Main export statement check karein:
 module.exports = router;

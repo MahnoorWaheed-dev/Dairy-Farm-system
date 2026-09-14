@@ -44,7 +44,7 @@ app.use('/shops', require('./routes/shopRoutes'));
 // Mount routes
 app.use('/person', require('./routes/personRoutes'));
 // Mount routes
-app.use('/gardens', gardenRoutes);
+app.use('/garden', gardenRoutes);
 
 
 
@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;  // Use Railway's PORT
-app.listen(PORT, '0.0.0.0', () => {     // '0.0.0.0' is required
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
 
