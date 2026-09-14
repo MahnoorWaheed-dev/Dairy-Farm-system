@@ -1,227 +1,283 @@
 <%- include('partials/header') %>
 
-<!-- Outer Wrapper: Desktop (lg: 1024px+) par flex-row, Tablet & iPad (below 1024px) par flex-col -->
-<div class="min-h-screen bg-gray-50 flex flex-col lg:flex-row w-full overflow-x-hidden">
-    <%- include('partials/sidebar') %>
+    <!-- Outer Wrapper: Desktop (lg: 1024px+) par flex-row, Tablet & iPad (below 1024px) par flex-col -->
+    <div class="min-h-screen bg-gray-50 flex flex-col lg:flex-row w-full overflow-x-hidden">
+        <%- include('partials/sidebar') %>
 
-    <!-- Main Content Area: Margin 1024px (lg) par apply hoga -->
-    <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-8 w-full overflow-x-hidden min-w-0 main-content">
+            <!-- Main Content Area: Margin 1024px (lg) par apply hoga -->
+            <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-8 w-full overflow-x-hidden min-w-0 main-content">
 
-        <!-- Header Section -->
-        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
+                <!-- Header Section -->
+                <header
+                    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
 
-            <!-- Brand Logo & Titles -->
-            <div class="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto">
-                <div class="w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-1 overflow-hidden">
-                    <img src="/assets/dairy-farm-logo.png" alt="Mangrio Logo" class="w-full h-full object-contain" />
-                </div>
+                    <!-- Brand Logo & Titles -->
+                    <div class="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto">
+                        <div
+                            class="w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-1 overflow-hidden">
+                            <img src="/assets/dairy-farm-logo.png" alt="Mangrio Logo"
+                                class="w-full h-full object-contain" />
+                        </div>
 
-                <div class="min-w-0 flex-1">
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-brandTeal tracking-wider uppercase truncate">
-                            GIRHORI FARM DHORONARO
-                        </h2>
-                        <span class="text-[10px] sm:text-xs font-medium text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">
-                            Baghat / Garden Management
-                        </span>
-                    </div>
-                    <p class="text-xs sm:text-sm font-normal text-slate-300 mt-1 truncate">
-                        & KAMRAN DAIRY FARM <span class="text-slate-500 mx-1">|</span> Proprietor: Haji Muhammad Ramzan Mangrio
-                    </p>
-                </div>
-            </div>
-
-            <!-- Header Action Button -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto shrink-0">
-                <button onclick="document.getElementById('addGardenModal').classList.remove('hidden')"
-                    class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto cursor-pointer">
-                    <i class="fa-solid fa-tree"></i>
-                    <span>Add New Garden</span>
-                </button>
-            </div>
-
-        </header>
-
-        <!-- Garden Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <% if (!gardens || gardens.length === 0) { %>
-                <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-8 text-center text-slate-500 font-medium shadow-sm">
-                    No garden records found. Click "Add New Garden" to register land or orchards.
-                </div>
-            <% } else { %>
-                <% gardens.forEach(garden => { %>
-                    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex flex-col justify-between gap-4 shadow-sm hover:shadow-md transition-shadow">
-                        
-                        <!-- Top Info -->
-                        <div>
-                            <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-3 mb-3">
-                                <div>
-                                    <h3 class="text-base sm:text-lg font-bold text-slate-900 truncate"><%= garden.gardenName %></h3>
-                                    <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-location-dot text-brandTeal mr-1"></i> <%= garden.location || 'N/A' %></p>
-                                </div>
-                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase border shrink-0 <%= garden.status === 'On Lease' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200' %>">
-                                    <%= garden.status %>
+                        <div class="min-w-0 flex-1">
+                            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                                <h2
+                                    class="text-base sm:text-lg lg:text-xl font-semibold text-brandTeal tracking-wider uppercase truncate">
+                                    GIRHORI FARM DHORONARO
+                                </h2>
+                                <span
+                                    class="text-[10px] sm:text-xs font-medium text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">
+                                    Baghat / Garden Management
                                 </span>
                             </div>
-
-                            <div class="grid grid-cols-2 gap-2 text-xs mb-3">
-                                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
-                                    <span class="text-slate-500 block">Area / Size:</span>
-                                    <strong class="text-slate-800 font-semibold"><%= garden.areaSize || 'Unspecified' %></strong>
-                                </div>
-                                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
-                                    <span class="text-slate-500 block">Crop / Fruit:</span>
-                                    <strong class="text-slate-800 font-semibold"><%= garden.cropType || 'General' %></strong>
-                                </div>
-                            </div>
-
-                            <!-- Current Lease Details -->
-                            <% if (garden.status === 'On Lease' && garden.currentLease) { %>
-                                <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-200 space-y-1 text-xs">
-                                    <div class="flex justify-between items-center text-amber-900 font-bold border-b border-amber-200/60 pb-1">
-                                        <span>Thekedar:</span>
-                                        <span><%= garden.currentLease.contractorName %></span>
-                                    </div>
-                                    <div class="flex justify-between text-slate-700 pt-1">
-                                        <span>Annual Lease:</span>
-                                        <span class="font-bold text-emerald-700">Rs. <%= (garden.currentLease.totalAmount || 0).toLocaleString() %></span>
-                                    </div>
-                                    <div class="flex justify-between text-slate-500 text-[11px]">
-                                        <span>Advance:</span>
-                                        <span>Rs. <%= (garden.currentLease.advanceAmount || 0).toLocaleString() %></span>
-                                    </div>
-                                </div>
-                            <% } %>
+                            <p class="text-xs sm:text-sm font-normal text-slate-300 mt-1 truncate">
+                                & KAMRAN DAIRY FARM <span class="text-slate-500 mx-1">|</span> Proprietor: Haji Muhammad
+                                Ramzan Mangrio
+                            </p>
                         </div>
-
-                        <!-- Card Action Buttons -->
-                        <div class="pt-2 border-t border-slate-100">
-                            <% if (garden.status === 'Available') { %>
-                                <button onclick="openLeaseModal('<%= garden._id %>', '<%= garden.gardenName %>')"
-                                    class="w-full bg-brandTeal/10 hover:bg-brandTeal hover:text-white border border-brandTeal/30 text-brandTeal py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
-                                    <i class="fa-solid fa-file-contract"></i>
-                                    <span>Assign Theka (Lease)</span>
-                                </button>
-                            <% } else { %>
-                                <form action="/garden/release/<%= garden._id %>" method="POST" onsubmit="return confirm('Kya aap is contract ko khatam karke garden ko available karna chahte hain?');">
-                                    <button type="submit" class="w-full bg-rose-50 hover:bg-rose-600 border border-rose-200 text-rose-700 hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
-                                        <i class="fa-solid fa-arrow-rotate-left"></i>
-                                        <span>End Theka Contract</span>
-                                    </button>
-                                </form>
-                            <% } %>
-                        </div>
-
                     </div>
-                <% }) %>
-            <% } %>
-        </div>
 
-    </main>
-</div>
+                    <!-- Header Action Button -->
+                    <div
+                        class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto shrink-0">
+                        <button onclick="document.getElementById('addGardenModal').classList.remove('hidden')"
+                            class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto cursor-pointer">
+                            <i class="fa-solid fa-tree"></i>
+                            <span>Add New Garden</span>
+                        </button>
+                    </div>
 
-<!-- Modal 1: Add New Garden -->
-<div id="addGardenModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
-    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl">
-        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
-            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                <i class="fa-solid fa-tree text-brandTeal"></i> Add New Garden
-            </h3>
-            <button onclick="document.getElementById('addGardenModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <form action="/garden/add" method="POST" class="space-y-3 text-xs">
-            <div>
-                <label class="block text-slate-600 font-medium mb-1">Garden Name / Plot Name *</label>
-                <input type="text" name="gardenName" required placeholder="e.g. Mango Orchard Plot A" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-            </div>
-            <div>
-                <label class="block text-slate-600 font-medium mb-1">Location / Address</label>
-                <input type="text" name="location" placeholder="e.g. Girhori Dhoronaro Road" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-slate-600 font-medium mb-1">Area Size</label>
-                    <input type="text" name="areaSize" placeholder="e.g. 5 Acres" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                </header>
+
+                <!-- Garden Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <% if (!gardens || gardens.length===0) { %>
+                        <div
+                            class="col-span-full bg-white rounded-2xl border border-slate-200 p-8 text-center text-slate-500 font-medium shadow-sm">
+                            No garden records found. Click "Add New Garden" to register land or orchards.
+                        </div>
+                        <% } else { %>
+                            <% gardens.forEach(garden=> { %>
+                                <div
+                                    class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex flex-col justify-between gap-4 shadow-sm hover:shadow-md transition-shadow">
+
+                                    <!-- Top Info -->
+                                    <div>
+                                        <div
+                                            class="flex items-start justify-between gap-2 border-b border-slate-100 pb-3 mb-3">
+                                            <div>
+                                                <h3 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+                                                    <%= garden.gardenName %>
+                                                </h3>
+                                                <p class="text-xs text-slate-500 mt-0.5"><i
+                                                        class="fa-solid fa-location-dot text-brandTeal mr-1"></i>
+                                                    <%= garden.location || 'N/A' %>
+                                                </p>
+                                            </div>
+                                            <span
+                                                class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase border shrink-0 <%= garden.status === 'On Lease' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200' %>">
+                                                <%= garden.status %>
+                                            </span>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+                                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
+                                                <span class="text-slate-500 block">Area / Size:</span>
+                                                <strong class="text-slate-800 font-semibold">
+                                                    <%= garden.areaSize || 'Unspecified' %>
+                                                </strong>
+                                            </div>
+                                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
+                                                <span class="text-slate-500 block">Crop / Fruit:</span>
+                                                <strong class="text-slate-800 font-semibold">
+                                                    <%= garden.cropType || 'General' %>
+                                                </strong>
+                                            </div>
+                                        </div>
+
+                                        <!-- Current Lease Details -->
+                                        <% if (garden.status==='On Lease' && garden.currentLease) { %>
+                                            <div
+                                                class="bg-amber-50/60 p-3 rounded-xl border border-amber-200 space-y-1 text-xs">
+                                                <div
+                                                    class="flex justify-between items-center text-amber-900 font-bold border-b border-amber-200/60 pb-1">
+                                                    <span>Thekedar:</span>
+                                                    <span>
+                                                        <%= garden.currentLease.contractorName %>
+                                                    </span>
+                                                </div>
+                                                <div class="flex justify-between text-slate-700 pt-1">
+                                                    <span>Annual Lease:</span>
+                                                    <span class="font-bold text-emerald-700">Rs. <%=
+                                                            (garden.currentLease.totalAmount || 0).toLocaleString() %>
+                                                    </span>
+                                                </div>
+                                                <div class="flex justify-between text-slate-500 text-[11px]">
+                                                    <span>Advance:</span>
+                                                    <span>Rs. <%= (garden.currentLease.advanceAmount ||
+                                                            0).toLocaleString() %></span>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                    </div>
+
+                                    <!-- Card Action Buttons -->
+                                    <div class="pt-2 border-t border-slate-100">
+                                        <% if (garden.status==='Available' ) { %>
+                                            <button
+                                                onclick="openLeaseModal('<%= garden._id %>', '<%= garden.gardenName %>')"
+                                                class="w-full bg-brandTeal/10 hover:bg-brandTeal hover:text-white border border-brandTeal/30 text-brandTeal py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                                <i class="fa-solid fa-file-contract"></i>
+                                                <span>Assign Theka (Lease)</span>
+                                            </button>
+                                            <% } else { %>
+                                                <form action="/garden/release/<%= garden._id %>" method="POST"
+                                                    onsubmit="return confirm('Kya aap is contract ko khatam karke garden ko available karna chahte hain?');">
+                                                    <button type="submit"
+                                                        class="w-full bg-rose-50 hover:bg-rose-600 border border-rose-200 text-rose-700 hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                                                        <span>End Theka Contract</span>
+                                                    </button>
+                                                </form>
+                                                <% } %>
+                                    </div>
+
+                                </div>
+                                <% }) %>
+                                    <% } %>
                 </div>
-                <div>
-                    <label class="block text-slate-600 font-medium mb-1">Crop / Fruit</label>
-                    <input type="text" name="cropType" placeholder="e.g. Mangoes" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                </div>
-            </div>
-            <div class="pt-3 flex gap-2">
-                <button type="button" onclick="document.getElementById('addGardenModal').classList.add('hidden')" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold cursor-pointer">Cancel</button>
-                <button type="submit" class="w-1/2 bg-brandTeal hover:bg-[#008F80] text-white py-2.5 rounded-xl font-bold cursor-pointer">Save Garden</button>
-            </div>
-        </form>
+
+            </main>
     </div>
-</div>
 
-<!-- Modal 2: Assign Lease -->
-<!-- Updated Assign Lease Modal -->
-<div id="assignLeaseModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
-    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl">
-        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
-            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                <i class="fa-solid fa-file-contract text-amber-600"></i> Assign Theka Contract
-            </h3>
-            <button onclick="document.getElementById('assignLeaseModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+    <!-- Modal 1: Add New Garden -->
+    <div id="addGardenModal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-tree text-brandTeal"></i> Add New Garden
+                </h3>
+                <button onclick="document.getElementById('addGardenModal').classList.add('hidden')"
+                    class="text-slate-400 hover:text-slate-600 cursor-pointer"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form action="/garden/add" method="POST" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-600 font-medium mb-1">Garden Name / Plot Name *</label>
+                    <input type="text" name="gardenName" required placeholder="e.g. Mango Orchard Plot A"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                </div>
+                <div>
+                    <label class="block text-slate-600 font-medium mb-1">Location / Address</label>
+                    <input type="text" name="location" placeholder="e.g. Girhori Dhoronaro Road"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-600 font-medium mb-1">Area Size</label>
+                        <input type="text" name="areaSize" placeholder="e.g. 5 Acres"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 font-medium mb-1">Crop / Fruit</label>
+                        <input type="text" name="cropType" placeholder="e.g. Mangoes"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    </div>
+                </div>
+                <div class="pt-3 flex gap-2">
+                    <button type="button" onclick="document.getElementById('addGardenModal').classList.add('hidden')"
+                        class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold cursor-pointer">Cancel</button>
+                    <button type="submit"
+                        class="w-1/2 bg-brandTeal hover:bg-[#008F80] text-white py-2.5 rounded-xl font-bold cursor-pointer">Save
+                        Garden</button>
+                </div>
+            </form>
         </div>
-        <form action="/garden/lease" method="POST" class="space-y-3 text-xs">
-            <input type="hidden" id="modalGardenId" name="gardenId">
-
-            <!-- Primary Person Account (For Ledger Transactions) -->
-            <div>
-                <label class="block text-slate-600 font-medium mb-1">Select Account / Person (For Ledger) *</label>
-                <select name="contractorId" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                    <option value="">-- Choose Account --</option>
-                    <% persons.forEach(p => { %>
-                        <option value="<%= p._id %>"><%= p.name %> (<%= p.mobile %>)</option>
-                    <% }) %>
-                </select>
-            </div>
-
-            <!-- Custom / Direct Thekedar Name (Optional / Separate) -->
-            <div>
-                <label class="block text-slate-600 font-medium mb-1">Thekedar / Sub-Contractor Name (Optional)</label>
-                <input type="text" name="contractorName" placeholder="e.g. Aslam Khan (Site Representative)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                <p class="text-[10px] text-slate-400 mt-0.5">Khali chorne par upar chune hue Person ka naam aayega.</p>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-slate-600 font-medium mb-1">Total Lease Amount (Rs) *</label>
-                    <input type="number" name="totalAmount" required placeholder="500000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                </div>
-                <div>
-                    <label class="block text-slate-600 font-medium mb-1">Advance Received (Rs)</label>
-                    <input type="number" name="advanceAmount" placeholder="100000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-slate-600 font-medium mb-1">Start Date *</label>
-                    <input type="date" name="startDate" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                </div>
-                <div>
-                    <label class="block text-slate-600 font-medium mb-1">End Date *</label>
-                    <input type="date" name="endDate" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
-                </div>
-            </div>
-
-            <div class="pt-3 flex gap-2">
-                <button type="button" onclick="document.getElementById('assignLeaseModal').classList.add('hidden')" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold cursor-pointer">Cancel</button>
-                <button type="submit" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl font-bold cursor-pointer">Confirm Contract</button>
-            </div>
-        </form>
     </div>
-</div>
 
-<script>
-    function openLeaseModal(gardenId, gardenName) {
-        document.getElementById('modalGardenId').value = gardenId;
-        document.getElementById('assignLeaseModal').classList.remove('hidden');
-    }
-</script>
+    <!-- Modal 2: Assign Lease -->
+    <!-- Updated Assign Lease Modal -->
+    <div id="assignLeaseModal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-file-contract text-amber-600"></i> Assign Theka Contract
+                </h3>
+                <button onclick="document.getElementById('assignLeaseModal').classList.add('hidden')"
+                    class="text-slate-400 hover:text-slate-600 cursor-pointer"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form action="/garden/lease" method="POST" class="space-y-3 text-xs">
+                <input type="hidden" id="modalGardenId" name="gardenId">
 
-<%- include('partials/footer') %>
+                <!-- Primary Person Account (For Ledger Transactions) -->
+                <div>
+                    <label class="block text-slate-600 font-medium mb-1">Select Account / Person (For Ledger) *</label>
+                    <select name="contractorId" required
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                        <option value="">-- Choose Account --</option>
+                        <% persons.forEach(p=> { %>
+                            <option value="<%= p._id %>">
+                                <%= p.name %> (<%= p.mobile %>)
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+
+                <!-- Custom / Direct Thekedar Name (Optional / Separate) -->
+                <div>
+                    <label class="block text-slate-600 font-medium mb-1">Thekedar / Sub-Contractor Name
+                        (Optional)</label>
+                    <input type="text" name="contractorName" placeholder="e.g. Aslam Khan (Site Representative)"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    <p class="text-[10px] text-slate-400 mt-0.5">Khali chorne par upar chune hue Person ka naam aayega.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-600 font-medium mb-1">Total Lease Amount (Rs) *</label>
+                        <input type="number" name="totalAmount" required placeholder="500000"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 font-medium mb-1">Advance Received (Rs)</label>
+                        <input type="number" name="advanceAmount" placeholder="100000"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-600 font-medium mb-1">Start Date *</label>
+                        <input type="date" name="startDate" required
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 font-medium mb-1">End Date *</label>
+                        <input type="date" name="endDate" required
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+                    </div>
+                </div>
+
+                <div class="pt-3 flex gap-2">
+                    <button type="button" onclick="document.getElementById('assignLeaseModal').classList.add('hidden')"
+                        class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold cursor-pointer">Cancel</button>
+                    <button type="submit"
+                        class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl font-bold cursor-pointer">Confirm
+                        Contract</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openLeaseModal(gardenId, gardenName) {
+            document.getElementById('modalGardenId').value = gardenId;
+            document.getElementById('assignLeaseModal').classList.remove('hidden');
+        }
+    </script>
+
+    <%- include('partials/footer') %>
