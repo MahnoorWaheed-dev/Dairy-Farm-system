@@ -1,107 +1,153 @@
 <%- include('partials/header') %>
 
-<!-- Main Wrapper Container -->
-<div class="min-h-screen flex flex-col md:flex-row w-full overflow-x-hidden bg-gray-50">
+<div class="min-h-screen flex flex-col md:flex-row w-full bg-slate-50/60 font-sans">
     
     <!-- Sidebar Partial -->
     <%- include('partials/sidebar') %>
 
-    <!-- Main Content Body (Mobile par Full Width, Desktop par Left Margin md:ml-64) -->
-    <main class="flex-1 w-full md:ml-64 p-4 md:p-8 overflow-x-hidden">
+    <!-- Main Workspace -->
+    <main class="flex-1 w-full md:ml-64 p-4 md:p-8 space-y-6">
         
-        <!-- Top Header Bar -->
-        <header class="flex justify-between items-center mb-6 md:mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-            <div>
-                <h2 class="text-lg md:text-xl font-bold text-gray-800">Dashboard</h2>
-            </div>
-            <div class="flex items-center space-x-2 md:space-x-3 text-xs md:text-sm font-semibold text-gray-600">
-                <i class="fa-solid fa-user-gear text-brandGold"></i>
-                <span><%= user.username %> (<%= user.role %>)</span>
-            </div>
-        </header>
-
-        <!-- Top 4 Metrics Row (Mobile par 2x2 Grid, Large Screens par 4-Columns) -->
-        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
-            <div class="bg-white p-4 md:p-5 rounded-xl border border-gray-100 shadow-sm text-center">
-                <p class="text-[11px] md:text-xs font-semibold text-gray-500">Total Shops</p>
-                <h3 class="text-xl md:text-2xl font-extrabold text-blue-600 mt-1">50</h3>
-            </div>
-            <div class="bg-white p-4 md:p-5 rounded-xl border border-gray-100 shadow-sm text-center">
-                <p class="text-[11px] md:text-xs font-semibold text-gray-500">Total Monthly Rent</p>
-                <h3 class="text-base md:text-2xl font-extrabold text-gray-800 mt-1 truncate">Rs. 500,000</h3>
-            </div>
-            <div class="bg-white p-4 md:p-5 rounded-xl border border-gray-100 shadow-sm text-center">
-                <p class="text-[11px] md:text-xs font-semibold text-gray-500">Received (This Month)</p>
-                <h3 class="text-base md:text-2xl font-extrabold text-emerald-600 mt-1 truncate">Rs. 350,000</h3>
-            </div>
-            <div class="bg-white p-4 md:p-5 rounded-xl border border-gray-100 shadow-sm text-center">
-                <p class="text-[11px] md:text-xs font-semibold text-gray-500">Pending (This Month)</p>
-                <h3 class="text-base md:text-2xl font-extrabold text-rose-500 mt-1 truncate">Rs. 150,000</h3>
+        <!-- Header Strip -->
+        <div class="bg-white px-6 py-4 rounded-xl border border-slate-200/70 shadow-2xs flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-slate-800">Dashboard</h1>
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-600 bg-amber-50/50 border border-amber-200/60 px-3 py-1.5 rounded-lg">
+                <i class="fa-solid fa-user-gear text-amber-500"></i>
+                <span><%= user ? user.username : 'Admin' %> (<%= user ? user.role : 'Owner' %>)</span>
             </div>
         </div>
 
-        <!-- Main Breakdown Layout Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Top 4 Clean Metric Cards (Exact Reference Alignment) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             
-            <!-- Quick Overview Table Section -->
-            <div class="lg:col-span-2 bg-white rounded-xl p-4 md:p-6 border border-gray-100 shadow-sm">
-                <h4 class="text-base font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">Quick Overview</h4>
+            <!-- Card 1: Total Entities -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/70 shadow-2xs text-center space-y-1">
+                <p class="text-xs font-semibold text-slate-500">Total Shops / Assets</p>
+                <h2 class="text-3xl font-extrabold text-blue-600"><%= totalShops || 0 %></h2>
+            </div>
+
+            <!-- Card 2: Total Monthly Rent -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/70 shadow-2xs text-center space-y-1">
+                <p class="text-xs font-semibold text-slate-500">Total Monthly Rent</p>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">
+                    Rs. <%= Number(totalMonthlyRent || 0).toLocaleString() %>
+                </h2>
+            </div>
+
+            <!-- Card 3: Rent Received -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/70 shadow-2xs text-center space-y-1">
+                <p class="text-xs font-semibold text-slate-500">Received (This Month)</p>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-emerald-600">
+                    Rs. <%= Number(receivedThisMonth || 0).toLocaleString() %>
+                </h2>
+            </div>
+
+            <!-- Card 4: Pending Rent -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/70 shadow-2xs text-center space-y-1">
+                <p class="text-xs font-semibold text-slate-500">Pending (This Month)</p>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-rose-500">
+                    Rs. <%= Number(pendingThisMonth || 0).toLocaleString() %>
+                </h2>
+            </div>
+
+        </div>
+
+        <!-- Middle Section: Quick Overview & Quick Actions Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+            
+            <!-- Left Side: Quick Overview (Spans 2 Columns) -->
+            <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200/70 p-6 shadow-2xs space-y-4">
+                <h2 class="text-base font-bold text-slate-800">Quick Overview</h2>
+                
+                <div class="space-y-2.5 text-xs md:text-sm font-semibold">
+                    
+                    <!-- Managed Assets Count Strip -->
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <span class="text-slate-500">Managed Entities (Shops / Gardens / Staff)</span>
+                        <span class="text-slate-800 font-bold">
+                            <%= totalShops || 0 %> Shops / <%= totalGardens || 0 %> Gardens / <%= totalStaff || 0 %> Staff
+                        </span>
+                    </div>
+
+                    <!-- Rent Received Strip -->
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <span class="text-slate-500">Rent Received (This Month)</span>
+                        <span class="text-emerald-600 font-bold">Rs. <%= Number(receivedThisMonth || 0).toLocaleString() %></span>
+                    </div>
+
+                    <!-- Pending Rent Strip -->
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <span class="text-slate-500">Rent Pending (This Month)</span>
+                        <span class="text-rose-500 font-bold">Rs. <%= Number(pendingThisMonth || 0).toLocaleString() %></span>
+                    </div>
+
+                    <!-- Agriculture Income Strip -->
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <span class="text-slate-500">Agriculture Income (This Month)</span>
+                        <span class="text-emerald-600 font-bold">Rs. <%= Number(agricultureIncome || 0).toLocaleString() %></span>
+                    </div>
+
+                    <!-- Total Income Strip -->
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <span class="text-slate-500">Total Gross Income (This Month)</span>
+                        <span class="text-slate-800 font-bold">Rs. <%= Number(totalIncomeThisMonth || 0).toLocaleString() %></span>
+                    </div>
+
+                    <!-- Expenses Strip -->
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <span class="text-slate-500">Total Expenses (This Month)</span>
+                        <span class="text-rose-500 font-bold">Rs. <%= Number(totalExpensesThisMonth || 0).toLocaleString() %></span>
+                    </div>
+
+                    <!-- Net Highlight Strip -->
+                    <div class="flex justify-between items-center p-4 bg-emerald-50/80 rounded-xl border border-emerald-100/80">
+                        <span class="text-emerald-900 font-bold">Net Balance (This Month)</span>
+                        <span class="text-emerald-700 font-extrabold text-base md:text-lg">
+                            Rs. <%= Number(netThisMonth || 0).toLocaleString() %>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Side: Quick Actions Panel (Exact Reference Layout) -->
+            <div class="bg-white rounded-xl border border-slate-200/70 p-6 shadow-2xs space-y-4">
+                <h2 class="text-base font-bold text-slate-800">Quick Actions</h2>
                 
                 <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-xs md:text-sm">
-                        <span class="text-gray-600">Total Shops</span>
-                        <span class="font-bold text-gray-800">50</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-xs md:text-sm">
-                        <span class="text-gray-600">Rent Received (This Month)</span>
-                        <span class="font-bold text-emerald-600">Rs. 350,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-xs md:text-sm">
-                        <span class="text-gray-600">Rent Pending (This Month)</span>
-                        <span class="font-bold text-rose-500">Rs. 150,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-xs md:text-sm">
-                        <span class="text-gray-600">Total Income (This Month)</span>
-                        <span class="font-bold text-gray-800">Rs. 400,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-xs md:text-sm">
-                        <span class="text-gray-600">Total Expenses (This Month)</span>
-                        <span class="font-bold text-rose-500">Rs. 120,000</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 md:p-4 bg-emerald-50 border border-emerald-100 rounded-lg text-xs md:text-sm">
-                        <span class="font-bold text-emerald-900">Net (This Month)</span>
-                        <span class="font-extrabold text-emerald-600 text-base md:text-lg">Rs. 280,000</span>
-                    </div>
-                </div>
-            </div>
+                    
+                    <!-- Action 1: Record Rent -->
+                    <a href="/shops" class="flex justify-between items-center p-3.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 transition text-xs md:text-sm font-semibold text-slate-700 group">
+                        <span class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-plus text-emerald-600 group-hover:scale-110 transition-transform"></i>
+                            Record Rent Payment
+                        </span>
+                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                    </a>
 
-            <!-- Quick Action Shortcuts -->
-            <div class="bg-white rounded-xl p-4 md:p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
-                <div>
-                    <h4 class="text-base font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">Quick Actions</h4>
-                    <div class="space-y-3">
-                        <a href="/shops" class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:border-brandTeal hover:bg-teal-50/30 transition text-xs md:text-sm font-semibold text-gray-700">
-                            <span><i class="fa-solid fa-plus text-brandTeal mr-2"></i> Record Rent Payment</span>
-                            <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-                        </a>
-                        <a href="/persons" class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:border-brandTeal hover:bg-teal-50/30 transition text-xs md:text-sm font-semibold text-gray-700">
-                            <span><i class="fa-solid fa-user-plus text-brandTeal mr-2"></i> Add Staff Transaction</span>
-                            <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-                        </a>
-                        <a href="/gardens" class="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:border-brandTeal hover:bg-teal-50/30 transition text-xs md:text-sm font-semibold text-gray-700">
-                            <span><i class="fa-solid fa-seedling text-brandTeal mr-2"></i> Add Agriculture Entry</span>
-                            <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-                        </a>
-                    </div>
-                </div>
+                    <!-- Action 2: Add Staff Transaction -->
+                    <a href="/person" class="flex justify-between items-center p-3.5 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 transition text-xs md:text-sm font-semibold text-slate-700 group">
+                        <span class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-user-plus text-blue-600 group-hover:scale-110 transition-transform"></i>
+                            Add Staff Transaction
+                        </span>
+                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                    </a>
 
-                <div class="mt-6 p-4 bg-slate-900 rounded-xl text-white">
-                    <p class="text-xs text-brandGold font-bold uppercase tracking-wider">System Status</p>
-                    <p class="text-xs text-gray-300 mt-1">Database Connected & Running Smoothly.</p>
+                    <!-- Action 3: Add Agriculture Entry -->
+                    <a href="/garden" class="flex justify-between items-center p-3.5 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/30 transition text-xs md:text-sm font-semibold text-slate-700 group">
+                        <span class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-seedling text-amber-600 group-hover:scale-110 transition-transform"></i>
+                            Add Agriculture Entry
+                        </span>
+                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                    </a>
+
                 </div>
             </div>
 
         </div>
+
     </main>
 </div>
 

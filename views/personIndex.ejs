@@ -7,50 +7,93 @@
     <!-- Main Content Area: Margin 1024px (lg) par apply hoga taake 800px screen par dashboard na kate -->
     <main  class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-8 w-full overflow-x-hidden min-w-0 main-content">
         
-        <!-- Header Section -->
-        <header  class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
+    
+<!-- Header Section -->
 
-            <!-- Brand Logo & Titles -->
-            <div class="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto ">
-                <div class="w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl  flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-1 overflow-hidden">
-                    <img src="/assets/dairy-farm-logo.png" alt="Mangrio Logo" class="w-full h-full object-contain" />
-                </div>
+<header
+    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
 
-                <div class="min-w-0 flex-1">
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-brandTeal tracking-wider uppercase truncate">
-                           GIRHORI FARM DHORONARO
-                        </h2>
-                        <span class="text-[10px] sm:text-xs font-medium text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">
-                            Persons / Accounts
-                        </span>
-                    </div>
-                    <p class="text-xs sm:text-sm font-normal text-slate-300 mt-1 truncate">
-                      & KAMRAN DAIRY FARM <span class="text-slate-500 mx-1">|</span> Proprietor: Haji Muhammad Ramzan Mangrio
-                    </p>
-                </div>
+    <!-- Brand Logo & Titles -->
+
+    <div class="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto">
+
+        <div
+            class="w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-1 overflow-hidden">
+
+            <img src="/assets/dairy-farm-logo.png" alt="Mangrio Logo"
+                class="w-full h-full object-contain" />
+
+        </div>
+
+        <div class="min-w-0 flex-1">
+
+            <!-- Small Top Text -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+
+                <p class="text-xs sm:text-sm font-normal text-slate-300 truncate">
+                    & KAMRAN DAIRY FARM
+                </p>
+
+                <span
+                    class="text-[10px] sm:text-xs font-medium text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">
+                    Persons / Accounts
+                </span>
+
             </div>
 
-            <!-- Header Counter & Action Button -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto shrink-0">
-                <div class="bg-slate-900/90 border border-slate-700/80 px-3 py-2 rounded-xl flex items-center justify-between sm:justify-start gap-3 shadow-inner">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-brandTeal animate-pulse"></span>
-                        <span class="text-xs font-medium text-slate-300">Total Registered:</span>
-                        <span class="text-xs font-bold text-brandTeal">
-                            <%= typeof totalPerson !== 'undefined' ? totalPerson : (personList ? personList.length : 0) %>
-                        </span>
-                    </div>
-                </div>
+            <!-- Big Main Text -->
+            <h2
+                class="text-base sm:text-lg lg:text-xl font-semibold text-brandTeal tracking-wider uppercase truncate">
+                GIRHORI FARM DHORONARO
+            </h2>
 
-                <button onclick="document.getElementById('addPersonModal').classList.remove('hidden')"
-                    class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <span>Add New Person</span>
-                </button>
+            <!-- Proprietor -->
+            <p class="text-xs sm:text-sm font-normal text-slate-300 mt-1 truncate">
+                <span class="text-slate-500 mx-1">|</span>
+                Proprietor: Haji Muhammad Ramzan Mangrio
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Header Counter & Action Button -->
+
+    <div
+        class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto shrink-0">
+
+        <div
+            class="bg-slate-900/90 border border-slate-700/80 px-3 py-2 rounded-xl flex items-center justify-between sm:justify-start gap-3 shadow-inner">
+
+            <div class="flex items-center gap-2">
+
+                <span class="w-2.5 h-2.5 rounded-full bg-brandTeal animate-pulse"></span>
+
+                <span class="text-xs font-medium text-slate-300">
+                    Total Registered:
+                </span>
+
+                <span class="text-xs font-bold text-brandTeal">
+                    <%= typeof totalPerson !== 'undefined' ? totalPerson : (personList ? personList.length : 0) %>
+                </span>
+
             </div>
 
-        </header>
+        </div>
+
+        <button onclick="document.getElementById('addPersonModal').classList.remove('hidden')"
+            class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            <span>Add New Person</span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
 
         <!-- Records Grid Container -->
     <div class="space-y-3.5">

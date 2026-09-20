@@ -4,6 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const connectDB = require('./config/db');
 const isAuth = require('./middleware/isAuth');
+const dashboardController = require('./controllers/dashboardController');
 const gardenRoutes = require('./routes/gardenRoutes');
 
 
@@ -48,15 +49,8 @@ app.use('/garden', gardenRoutes);
 
 
 
-
-
-// GET: Dashboard
-app.get('/dashboard', isAuth, (req, res) => {
-    res.render('dashboard', {
-        title: 'Dashboard - Mangrio Shopping Centre',
-        user: req.session.user
-    });
-});
+// GET: Dashboard (Dynamic Data from Controller)
+app.get('/dashboard', isAuth, dashboardController.getDashboard);
 
 // Default Route
 app.get('/', (req, res) => {

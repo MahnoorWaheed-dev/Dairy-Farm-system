@@ -19,41 +19,54 @@
             }
         }
     </script>
-    <style>
-        @media print {
-            .no-print {
-                display: none !important;
-            }
+  <style>
+@page {
+    size: A4 portrait;
+    margin: 10mm; /* A4 Margin lock – blank page overflow ko rokta hai */
+}
 
-            body {
-                background-color: #fff !important;
-                color: #000 !important;
-                padding: 0 !important;
-            }
+@media print {
+    /* Height over-flow stop karne ke liye */
+    html, body {
+        height: 100% !important;
+        overflow: hidden !important;
+        background-color: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 
-            .print-card {
-                border: 1px solid #ccc !important;
-                box-shadow: none !important;
-                background: #fff !important;
-                color: #000 !important;
-            }
+    .no-print, header, nav, footer, sidebar {
+        display: none !important;
+    }
 
-            .print-text {
-                color: #000 !important;
-            }
+    /* Print card centering & single-page enforcement */
+    .print-card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        background: #fff !important;
+        color: #000 !important;
+        margin: 0 auto !important; /* Centered horizontal positioning */
+        page-break-inside: avoid !important; /* 2nd page creation stop karta hai */
+        page-break-after: avoid !important;
+    }
 
-            table {
-                border-collapse: collapse !important;
-                width: 100% !important;
-            }
+    .print-text {
+        color: #000 !important;
+    }
 
-            th,
-            td {
-                border: 1px solid #ddd !important;
-                color: #000 !important;
-            }
-        }
-    </style>
+    table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+    }
+
+    th, td {
+        border: 1px solid #ddd !important;
+        color: #000 !important;
+    }
+}
+</style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen p-3 sm:p-6 font-sans">
     <div class="max-w-5xl mx-auto space-y-6">
@@ -79,12 +92,13 @@
                             class="w-full h-full object-contain" />
                     </div>
                     <div>
+                        <h1 class="text-xl sm:text-1xl font-extrabold text-slate-800 uppercase tracking-wide print-text">
+                           KAMRAN DAIRY FARM &
+                        </h1>
                         <h1 class="text-xl sm:text-2xl font-extrabold text-brandTeal uppercase tracking-wide print-text">
                             GIRHORI FARM DHORONARO
                         </h1>
-                        <h1 class="text-xl sm:text-1xl font-extrabold text-slate-800 uppercase tracking-wide print-text">
-                            & KAMRAN DAIRY FARM 
-                        </h1>
+                        
                          
                         
                         <p class="text-xs sm:text-sm font-semibold text-slate-600 print-text">Account Statement & Ledger Record</p>
