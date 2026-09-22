@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const gardenSchema = new mongoose.Schema({
     gardenName: {
         type: String,
@@ -37,7 +36,4 @@ const gardenSchema = new mongoose.Schema({
         notes: String
     }
 }, { timestamps: true });
-
-
-
 module.exports = mongoose.model('Garden', gardenSchema);

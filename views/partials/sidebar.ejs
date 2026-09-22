@@ -1,18 +1,19 @@
 <!-- 1. MOBILE / TABLET TOP BAR WITH TOGGLE HAMBURGER MENU -->
-<div id="mobileTopBar" class="lg:hidden bg-sidebarBg text-white p-3.5 flex justify-between items-center border-b border-gray-800 sticky top-0 z-50 shadow-md w-full no-print">
-    
+<div id="mobileTopBar" 
+    class="lg:hidden bg-sidebarBg text-white p-3.5 flex justify-between items-center border-b border-gray-800 fixed top-0 left-0 z-50 shadow-md w-full no-print">
     <!-- Brand Info -->
     <div class="flex items-center space-x-3 overflow-hidden">
-        <div class="w-9 h-9 p-1 rounded-xl flex items-center justify-center shrink-0 shadow-md border border-emerald-500/30 bg-slate-900">
+        <div
+            class="w-9 h-9 p-1 rounded-xl flex items-center justify-center shrink-0 shadow-md border border-emerald-500/30 bg-slate-900">
             <img src="/assets/dairy-farm-logo.png" alt="Logo" class="w-full h-full object-contain" />
         </div>
         <div class="overflow-hidden">
-            <h1 class="font-black text-[10px] sm:text-xs tracking-wider text-white uppercase truncate">
+            <p class="text-[12px] text-teal-600 font-bold tracking-widest uppercase truncate mt-0.5">
+                KAMRAN DAIRY FARM &
+            </p>
+            <h1 class="font-black text-xs tracking-wider text-white leading-tight uppercase truncate">
                 GIRHORI FARM DHORONARO
             </h1>
-            <p class="text-[9px] sm:text-[10px] text-teal-500 font-bold uppercase truncate">
-                & KAMRAN DAIRY FARM
-            </p>
         </div>
     </div>
 
@@ -23,71 +24,69 @@
 </div>
 
 <!-- 2. BACKDROP OVERLAY -->
-<div id="mobileBackdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity no-print"></div>
+<div id="mobileBackdrop" onclick="toggleMobileMenu()"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity no-print"></div>
 
 <!-- 3. MAIN SIDEBAR -->
-<aside id="appSidebar" class="w-64 bg-sidebarBg h-screen text-white flex flex-col fixed left-0 top-0 bottom-0 shadow-lg z-40 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 no-print">
-    
+<aside id="appSidebar" 
+    class="w-64 bg-sidebarBg h-[calc(100vh-64px)] text-white flex flex-col fixed left-0 top-[64px] bottom-0 shadow-lg z-40 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 lg:top-0 lg:h-screen no-print">
+
     <!-- Sidebar Brand Header (Desktop) -->
     <div class="hidden lg:flex p-4 border-b border-gray-800 items-center justify-between shrink-0">
         <div class="flex items-center space-x-3">
-            <div class="w-11 h-11 p-1 rounded-xl flex items-center justify-center shrink-0 shadow-md border border-emerald-500/30">
+            <div
+                class="w-11 h-11 p-1 rounded-xl flex items-center justify-center shrink-0 shadow-md border border-emerald-500/30">
                 <img src="/assets/dairy-farm-logo.png" alt="Logo" class="w-full h-full object-contain" />
             </div>
 
             <div class="overflow-hidden">
                 <p class="text-[12px] text-teal-600 font-bold tracking-widest uppercase truncate mt-0.5">
-                 KAMRAN DAIRY FARM &
+                    KAMRAN DAIRY FARM &
                 </p>
                 <h1 class="font-black text-xs tracking-wider text-white leading-tight uppercase truncate">
                     GIRHORI FARM DHORONARO
                 </h1>
-                
+
             </div>
         </div>
     </div>
-
     <!-- Navigation Menu -->
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-        <a href="/dashboard" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
+        <a href="/dashboard"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
             <i class="fa-solid fa-chart-line w-5"></i>
             <span>Dashboard</span>
         </a>
-
-        <a href="/shops" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
+        <a href="/shops"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
             <i class="fa-solid fa-store w-5"></i>
             <span>Shops & Rent</span>
         </a>
-
-        <a href="/shops/other-income" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
+        <a href="/shops/other-income"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
             <i class="fa-solid fa-file-invoice-dollar w-5"></i>
             <span>Other Income (Yearly)</span>
         </a>
-
-        <a href="/person" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
+        <a href="/person"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
             <i class="fa-solid fa-users w-5"></i>
             <span>Staff / Persons</span>
         </a>
-
-        <a href="/garden" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
+        <a href="/garden"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
             <i class="fa-solid fa-seedling w-5"></i>
             <span>Agriculture (Baghaat)</span>
         </a>
-
-        <a href="/income" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
-            <i class="fa-solid fa-wallet w-5"></i>
-            <span>Income</span>
-        </a>
-
-        <a href="/expenses" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
-            <i class="fa-solid fa-file-invoice-dollar w-5"></i>
-            <span>Expenses</span>
+        <a href="/reports"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
+            <i class="fa-solid fa-chart-line w-5"></i>
+            <span>Financial Reports</span>
         </a>
     </nav>
-
     <!-- Logout -->
     <div class="p-4 border-t border-gray-800 shrink-0">
-        <a href="/logout" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition">
+        <a href="/logout"
+            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition">
             <i class="fa-solid fa-right-from-bracket w-5"></i>
             <span>Logout</span>
         </a>

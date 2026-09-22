@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const isAuth = require('./middleware/isAuth');
 const dashboardController = require('./controllers/dashboardController');
 const gardenRoutes = require('./routes/gardenRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 
 const app = express();
@@ -47,6 +48,7 @@ app.use('/person', require('./routes/personRoutes'));
 // Mount routes
 app.use('/garden', gardenRoutes);
 
+app.use('/reports', reportRoutes);
 
 
 // GET: Dashboard (Dynamic Data from Controller)
