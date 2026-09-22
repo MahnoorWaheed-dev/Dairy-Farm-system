@@ -5,12 +5,13 @@
 
     <!-- Main Content Area: Responsive Margin and Padding -->
     <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-8 w-full overflow-x-hidden min-w-0 main-content">
-        <!-- Header Section -->
-        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
+      
+        <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-6 sm:mb-8 bg-sidebarBg p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-700/80">
 
     <!-- Brand Logo & Titles -->
-    <div class="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto">
-        <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl  flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-2 overflow-hidden">
+    <div class="flex items-center space-x-3 sm:space-x-4 w-full xl:w-auto min-w-0">
+
+        <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center shrink-0 shadow-md border border-brandTeal/40 p-2 overflow-hidden">
             <img src="/assets/white-shopping-centre.png" alt="Mangrio Logo" class="w-full h-full object-contain" />
         </div>
 
@@ -19,10 +20,12 @@
                 <h2 class="text-base sm:text-lg md:text-xl font-semibold text-brandTeal tracking-wider uppercase truncate">
                     MANGRIO SHOPPING CENTRE
                 </h2>
+
                 <span class="text-[10px] sm:text-xs font-medium text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-700 shrink-0">
                     Shops & Rent
                 </span>
             </div>
+
             <p class="text-xs sm:text-sm font-normal text-slate-300 mt-1 truncate">
                 منگريو شاپنگ سينٽر <span class="text-slate-500 mx-1">|</span> Proprietor: Haji Muhammad Ramzan Mangrio
             </p>
@@ -30,9 +33,11 @@
     </div>
 
     <!-- Header Action Buttons & Status Summary -->
-    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
+    <div class="flex flex-col sm:flex-row xl:flex-row items-stretch sm:items-center gap-2 w-full xl:w-auto shrink-0 min-w-0">
+
         <!-- Status Badge -->
-        <div class="bg-slate-900/90 border border-slate-700/80 px-2 py-2 rounded-xl flex items-center justify-around sm:justify-start gap-3 shadow-inner">
+        <div class="bg-slate-900/90 border border-slate-700/80 px-2 py-2 rounded-xl flex items-center justify-around sm:justify-start gap-3 shadow-inner shrink-0">
+            
             <div class="flex items-center gap-1.5" title="Paid Shops">
                 <span class="w-2.5 h-2.5 rounded-full bg-brandTeal animate-pulse"></span>
                 <span class="text-xs font-medium text-slate-300">Paid:</span>
@@ -53,24 +58,24 @@
         </div>
 
         <!-- Buttons Container with Spacing -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+        <div class="flex flex-wrap sm:flex-nowrap items-stretch sm:items-center gap-2 w-full sm:w-auto min-w-0">
+
             <!-- Other Income / Statement Button -->
             <a href="/shops/other-income" 
-               class="bg-slate-800 hover:bg-slate-900 text-white font-medium px-2 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 border border-slate-700/60">
+               class="bg-slate-800 hover:bg-slate-900 text-white font-medium px-2 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 border border-slate-700/60 flex-1 sm:flex-none whitespace-nowrap min-w-0">
                 <i class="fa-solid fa-file-invoice-dollar text-brandTeal"></i>
                 <span>Other Income</span>
             </a>
 
             <!-- Add Button -->
             <button onclick="document.getElementById('addShopModal').classList.remove('hidden')"
-                class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-2 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap">
+                class="bg-brandTeal hover:bg-[#008F80] text-white font-medium px-2 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2 flex-1 sm:flex-none whitespace-nowrap min-w-0">
                 <i class="fa-solid fa-plus"></i>
                 <span>Add New Shop</span>
             </button>
+
         </div>
-
     </div>
-
 </header>
 
         <!-- Shops List Table -->
