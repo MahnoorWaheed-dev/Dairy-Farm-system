@@ -28,9 +28,8 @@
     class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity no-print"></div>
 
 <!-- 3. MAIN SIDEBAR -->
-<aside id="appSidebar" 
-    class="w-64 bg-sidebarBg h-[calc(100vh-64px)] text-white flex flex-col fixed left-0 top-[64px] bottom-0 shadow-lg z-40 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 lg:top-0 lg:h-screen no-print">
-
+<aside id="appSidebar"  
+    class="w-64 bg-sidebarBg text-white flex flex-col fixed left-0 top-[64px] bottom-0 shadow-lg z-40 transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 lg:top-0 lg:h-screen no-print h-[calc(100dvh-64px)] lg:h-screen">
     <!-- Sidebar Brand Header (Desktop) -->
     <div class="hidden lg:flex p-4 border-b border-gray-800 items-center justify-between shrink-0">
         <div class="flex items-center space-x-3">
@@ -51,7 +50,7 @@
         </div>
     </div>
     <!-- Navigation Menu -->
-    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+   <nav class="flex-1 min-h-0 px-4 py-6 space-y-2 overflow-y-auto">
         <a href="/dashboard"
             class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-teal-700 transition">
             <i class="fa-solid fa-chart-line w-5"></i>

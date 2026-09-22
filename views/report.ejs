@@ -10,16 +10,30 @@
     <!-- Main Content -->
     <main class="flex-1 lg:ml-64 p-4 sm:p-6 md:p-8 w-full overflow-x-hidden min-w-0 main-content"">
         
-        <!-- Header & Action Strip -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200/70 shadow-2xs flex justify-between items-center print:border-none print:shadow-none">
-            <div>
-                <h1 class="text-xl md:text-2xl font-bold text-slate-800">Financial Reports & Ledger</h1>
-                <p class="text-xs text-slate-500 mt-0.5">Aggregated Income, Agriculture & Staff Dues Overview</p>
-            </div>
-            <button onclick="window.print()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2 print:hidden shadow-2xs">
-                <i class="fa-solid fa-print"></i> Print / Download PDF
-            </button>
-        </div>
+    <!-- Header & Action Strip -->
+<div class="bg-[#0f172a] p-5 md:p-6  mb-2 rounded-2xl border border-slate-700/60 shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4 print:bg-white print:border-none print:shadow-none">
+
+    <!-- Header Content -->
+    <div>
+        <h1 class="text-xl md:text-2xl font-bold text-white">
+            Financial Reports & Ledger
+        </h1>
+
+        <p class="text-xs md:text-sm text-slate-300 mt-1">
+            Aggregated Income, Agriculture & Staff Dues Overview
+        </p>
+    </div>
+
+    <!-- Print Button -->
+    <button 
+        onclick="window.print()" 
+        class="bg-[#08b6bd] hover:bg-[#06a4aa] text-white text-xs md:text-sm font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2 print:hidden shadow-md"
+    >
+        <i class="fa-solid fa-print"></i>
+        Print / Download PDF
+    </button>
+
+</div>
 
         <!-- Consolidated Summary Cards Grid (4 Columns) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
