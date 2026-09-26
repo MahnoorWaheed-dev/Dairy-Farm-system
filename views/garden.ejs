@@ -136,27 +136,80 @@
                                             <% } %>
                                     </div>
 
-                                    <!-- Card Action Buttons -->
-                                    <div class="pt-2 border-t border-slate-100">
-                                        <% if (garden.status==='Available' ) { %>
-                                            <button
-                                                onclick="openLeaseModal('<%= garden._id %>', '<%= garden.gardenName %>')"
-                                                class="w-full bg-brandTeal/10 hover:bg-brandTeal hover:text-white border border-brandTeal/30 text-brandTeal py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
-                                                <i class="fa-solid fa-file-contract"></i>
-                                                <span>Assign Theka (Lease)</span>
-                                            </button>
-                                            <% } else { %>
-                                                <form action="/garden/release/<%= garden._id %>" method="POST"
-                                                    onsubmit="return confirm('Kya aap is contract ko khatam karke garden ko available karna chahte hain?');">
-                                                    <button type="submit"
-                                                        class="w-full bg-rose-50 hover:bg-rose-600 border border-rose-200 text-rose-700 hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
-                                                        <i class="fa-solid fa-arrow-rotate-left"></i>
-                                                        <span>End Theka Contract</span>
-                                                    </button>
-                                                </form>
-                                                <% } %>
-                                    </div>
+                                   <!-- Card Action Buttons -->
+<div class="pt-2 border-t border-slate-100 space-y-2">
 
+    <!-- Edit / Delete Buttons -->
+    <div class="grid grid-cols-2 gap-2">
+
+   <!-- Edit Garden -->
+<button
+    type="button"
+    onclick='openEditGardenModal(
+        "<%= garden._id %>",
+        "<%= garden.gardenName %>",
+        "<%= garden.location || "" %>",
+        "<%= garden.areaSize || "" %>",
+        "<%= garden.cropType || "" %>"
+    )'
+    class="bg-brandTeal/10 hover:bg-brandTeal border border-brandTeal/30 text-brandTeal hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+
+    <i class="fa-solid fa-pen-to-square"></i>
+    <span>Edit</span>
+</button>
+
+        <!-- Delete Garden -->
+        <form
+            action="/garden/delete/<%= garden._id %>"
+            method="POST"
+            onsubmit="return confirm('Kya aap is garden ko delete karna chahte hain?');">
+
+            <button
+                type="submit"
+                class="w-full bg-rose-50 hover:bg-rose-600 border border-rose-200 text-rose-700 hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete</span>
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Existing Lease Action -->
+    <% if (garden.status==='Available' ) { %>
+
+        <button
+            onclick="openLeaseModal('<%= garden._id %>', '<%= garden.gardenName %>')"
+            class="w-full bg-brandTeal/10 hover:bg-brandTeal hover:text-white border border-brandTeal/30 text-brandTeal py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+
+            <i class="fa-solid fa-file-contract"></i>
+            <span>Assign Theka (Lease)</span>
+
+        </button>
+
+    <% } else { %>
+
+        <form
+            action="/garden/release/<%= garden._id %>"
+            method="POST"
+            onsubmit="return confirm('Kya aap is contract ko khatam karke garden ko available karna chahte hain?');">
+
+            <button
+                type="submit"
+                class="w-full bg-rose-50 hover:bg-rose-600 border border-rose-200 text-rose-700 hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+                <span>End Theka Contract</span>
+
+            </button>
+
+        </form>
+
+    <% } %>
+
+</div>
                                 </div>
                                 <% }) %>
                                     <% } %>
@@ -210,6 +263,129 @@
             </form>
         </div>
     </div>
+    <!-- Modal: Edit Garden -->
+<div id="editGardenModal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
+
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl">
+
+        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+
+            <h3 class="text-base font-bold text-brandTeal flex items-center gap-2">
+                <i class="fa-solid fa-pen-to-square text-brandTeal"></i>
+                Edit Garden
+            </h3>
+
+            <button
+                type="button"
+                onclick="document.getElementById('editGardenModal').classList.add('hidden')"
+                class="text-slate-400 hover:text-slate-600 cursor-pointer">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <form id="editGardenForm" method="POST" class="space-y-3 text-xs">
+
+            <!-- Garden Name -->
+            <div>
+
+                <label class="block text-slate-600 font-medium mb-1">
+                    Garden Name / Plot Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="editGardenName"
+                    name="gardenName"
+                    required
+                    class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+
+            </div>
+
+
+            <!-- Location -->
+            <div>
+
+                <label class="block text-slate-600 font-medium mb-1">
+                    Location / Address
+                </label>
+
+                <input
+                    type="text"
+                    id="editGardenLocation"
+                    name="location"
+                    class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+
+            </div>
+
+
+            <!-- Area + Crop -->
+            <div class="grid grid-cols-2 gap-3">
+
+                <div>
+
+                    <label class="block text-slate-600 font-medium mb-1">
+                        Area Size
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editGardenAreaSize"
+                        name="areaSize"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+
+                </div>
+
+
+                <div>
+
+                    <label class="block text-slate-600 font-medium mb-1">
+                        Crop / Fruit
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editGardenCropType"
+                        name="cropType"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:border-brandTeal outline-none">
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="pt-3 flex gap-2">
+
+                <button
+                    type="button"
+                    onclick="document.getElementById('editGardenModal').classList.add('hidden')"
+                    class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold cursor-pointer">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="w-1/2 bg-brandTeal hover:bg-brandTeal/90 text-white py-2.5 rounded-xl font-bold cursor-pointer">
+
+                    Update Garden
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
     <!-- Modal 2: Assign Lease -->
     <!-- Updated Assign Lease Modal -->
@@ -399,211 +575,211 @@
     </div>
 
     <!-- Perfect Full-Width Page Centering CSS -->
-   <style>
+    <style>
+        /* ========================================= */
+        /* A4 PRINT SETTINGS                         */
+        /* ========================================= */
 
-/* ========================================= */
-/* A4 PRINT SETTINGS                         */
-/* ========================================= */
-
-@page {
-    size: A4 portrait;
-    margin: 10mm;
-}
-
-
-/* ========================================= */
-/* PRINT                                     */
-/* ========================================= */
-
-@media print {
-
-    html,
-    body {
-        width: 100% !important;
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #ffffff !important;
-        overflow: hidden !important;
-    }
-
-    body {
-        visibility: hidden !important;
-    }
-
-    .no-print,
-    header,
-    sidebar,
-    nav,
-    footer,
-    .sidebar,
-    #sidebar {
-        display: none !important;
-    }
-
-    #printReceiptModal {
-        visibility: visible !important;
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        height: 100% !important;
-        background: transparent !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        display: block !important;
-        overflow: hidden !important;
-    }
-
-    .print-wrapper {
-        visibility: visible !important;
-        position: relative !important;
-        width: 100% !important;
-        max-width: none !important;
-        height: 100% !important;
-        box-shadow: none !important;
-        border: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        overflow: hidden !important;
-    }
-
-    #printableArea,
-    #printableArea * {
-        visibility: visible !important;
-    }
-
-    #printableArea {
-        position: relative !important;
-        box-sizing: border-box !important;
-
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        max-height: 100% !important;
-
-        margin: 0 auto !important;
-        padding: 16px !important;
-
-        background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 10px !important;
-        box-shadow: none !important;
-
-        page-break-before: avoid !important;
-        page-break-after: avoid !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-
-        overflow: hidden !important;
-    }
-
-    .print-text {
-        color: #000000 !important;
-        font-weight: 800 !important;
-    }
-}
+        @page {
+            size: A4 portrait;
+            margin: 10mm;
+        }
 
 
-/* ========================================= */
-/* MOBILE RESPONSIVE                         */
-/* ========================================= */
+        /* ========================================= */
+        /* PRINT                                     */
+        /* ========================================= */
 
-@media (max-width: 640px) {
+        @media print {
 
-    /* Modal spacing */
-    #printReceiptModal {
-        padding: 20px 12px !important;
-        align-items: center !important;
-        justify-content: center !important;
-        overflow-y: auto !important;
-    }
+            html,
+            body {
+                width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                overflow: hidden !important;
+            }
 
-    /* Main wrapper */
-    #printReceiptModal .print-wrapper {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
+            body {
+                visibility: hidden !important;
+            }
 
-    /* Receipt */
-    #printReceiptModal #printableArea {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 14px !important;
-        margin: 0 !important;
-        border-radius: 12px !important;
-        overflow-x: hidden !important;
-    }
+            .no-print,
+            header,
+            sidebar,
+            nav,
+            footer,
+            .sidebar,
+            #sidebar {
+                display: none !important;
+            }
 
-    /* Action buttons */
-    #printReceiptModal .no-print {
-        margin-top: 4px !important;
-        margin-bottom: 18px !important;
-        padding-top: 4px !important;
-        gap: 8px !important;
-        flex-wrap: wrap !important;
-    }
+            #printReceiptModal {
+                visibility: visible !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                height: 100% !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+                overflow: hidden !important;
+            }
 
-    #printReceiptModal .no-print > div {
-        flex-wrap: wrap !important;
-        gap: 8px !important;
-    }
+            .print-wrapper {
+                visibility: visible !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: none !important;
+                height: 100% !important;
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden !important;
+            }
 
-    #printReceiptModal .no-print button {
-        white-space: nowrap !important;
-    }
+            #printableArea,
+            #printableArea * {
+                visibility: visible !important;
+            }
 
-    /* Receipt header */
-    #printReceiptModal #printableArea > div:first-child {
-        gap: 8px !important;
-    }
+            #printableArea {
+                position: relative !important;
+                box-sizing: border-box !important;
 
-    #printReceiptModal #printableArea h1 {
-        font-size: 12px !important;
-        line-height: 1.35 !important;
-    }
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                max-height: 100% !important;
 
-    #printReceiptModal #printableArea p {
-        font-size: 10px !important;
-    }
+                margin: 0 auto !important;
+                padding: 16px !important;
 
-    /* Logo */
-    #printReceiptModal #printableArea .w-12 {
-        width: 42px !important;
-        height: 42px !important;
-    }
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                border-radius: 10px !important;
+                box-shadow: none !important;
 
-    /* Statement date */
-    #printReceiptModal #printableArea .text-right {
-        flex-shrink: 0 !important;
-    }
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
 
-    /* Receipt details */
-    #printReceiptModal #printableArea .space-y-2\.5 > div {
-        gap: 10px !important;
-        align-items: center !important;
-    }
+                overflow: hidden !important;
+            }
 
-    #printReceiptModal #printableArea .space-y-2\.5 > div > span:last-child {
-        text-align: right !important;
-        word-break: break-word !important;
-    }
+            .print-text {
+                color: #000000 !important;
+                font-weight: 800 !important;
+            }
+        }
 
-    /* Signatures */
-    #printReceiptModal #printableArea .border-dashed {
-        gap: 20px !important;
-    }
 
-    #printReceiptModal #printableArea .border-dashed > div {
-        flex: 1 !important;
-        min-width: 0 !important;
-    }
-}
+        /* ========================================= */
+        /* MOBILE RESPONSIVE                         */
+        /* ========================================= */
 
-</style>
+        @media (max-width: 640px) {
+
+            /* Modal spacing */
+            #printReceiptModal {
+                padding: 20px 12px !important;
+                align-items: center !important;
+                justify-content: center !important;
+                overflow-y: auto !important;
+            }
+
+            /* Main wrapper */
+            #printReceiptModal .print-wrapper {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Receipt */
+            #printReceiptModal #printableArea {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 14px !important;
+                margin: 0 !important;
+                border-radius: 12px !important;
+                overflow-x: hidden !important;
+            }
+
+            /* Action buttons */
+            #printReceiptModal .no-print {
+                margin-top: 4px !important;
+                margin-bottom: 18px !important;
+                padding-top: 4px !important;
+                gap: 8px !important;
+                flex-wrap: wrap !important;
+            }
+
+            #printReceiptModal .no-print>div {
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+
+            #printReceiptModal .no-print button {
+                white-space: nowrap !important;
+            }
+
+            /* Receipt header */
+            #printReceiptModal #printableArea>div:first-child {
+                gap: 8px !important;
+            }
+
+            #printReceiptModal #printableArea h1 {
+                font-size: 12px !important;
+                line-height: 1.35 !important;
+            }
+
+            #printReceiptModal #printableArea p {
+                font-size: 10px !important;
+            }
+
+            /* Logo */
+            #printReceiptModal #printableArea .w-12 {
+                width: 42px !important;
+                height: 42px !important;
+            }
+
+            /* Statement date */
+            #printReceiptModal #printableArea .text-right {
+                flex-shrink: 0 !important;
+            }
+
+            /* Receipt details */
+            #printReceiptModal #printableArea .space-y-2\.5>div {
+                gap: 10px !important;
+                align-items: center !important;
+            }
+
+            #printReceiptModal #printableArea .space-y-2\.5>div>span:last-child {
+                text-align: right !important;
+                word-break: break-word !important;
+            }
+
+            /* Signatures */
+            #printReceiptModal #printableArea .border-dashed {
+                gap: 20px !important;
+            }
+
+            #printReceiptModal #printableArea .border-dashed>div {
+                flex: 1 !important;
+                min-width: 0 !important;
+            }
+        }
+    </style>
+
+    
     <script>
         function printGardenReceipt(gardenName, contractorName, totalAmount, advanceAmount, startDate, endDate) {
             const total = Number(totalAmount) || 0;
@@ -645,6 +821,19 @@
                 modal.classList.add('hidden');
             }
         }
+
+        // Open Edit Garden Modal
+function openEditGardenModal(gardenId, gardenName, location, areaSize, cropType) {
+
+    document.getElementById('editGardenForm').action = '/garden/edit/' + gardenId;
+
+    document.getElementById('editGardenName').value = gardenName || '';
+    document.getElementById('editGardenLocation').value = location || '';
+    document.getElementById('editGardenAreaSize').value = areaSize || '';
+    document.getElementById('editGardenCropType').value = cropType || '';
+
+    document.getElementById('editGardenModal').classList.remove('hidden');
+}
     </script>
 
     <%- include('partials/footer') %>

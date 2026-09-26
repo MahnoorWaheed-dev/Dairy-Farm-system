@@ -89,9 +89,45 @@ const releaseLease = async (req, res) => {
     }
 };
 
+// Edit Garden
+const editGarden = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { gardenName, location, areaSize, cropType } = req.body;
+
+        await Garden.findByIdAndUpdate(id, {
+            gardenName,
+            location,
+            areaSize,
+            cropType
+        });
+
+        res.redirect('/garden');
+    } catch (err) {
+        console.error('Error editing garden:', err);
+        res.redirect('/garden');
+    }
+};
+
+// Delete Garden
+const deleteGarden = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await Garden.findByIdAndDelete(id);
+
+        res.redirect('/garden');
+    } catch (err) {
+        console.error('Error deleting garden:', err);
+        res.redirect('/garden');
+    }
+};
+
 module.exports = {
     getGardens,
     addGarden,
     assignLease,
-    releaseLease
+    releaseLease,
+    editGarden,
+    deleteGarden
 };
