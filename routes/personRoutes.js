@@ -6,6 +6,10 @@ router.get('/', personController.getPersonList);
 router.post('/add', personController.addPerson);
 router.post('/transaction', personController.addTransaction);
 router.get('/statement/:id', personController.getPersonStatement);
+
+router.get('/edit/:id', personController.getEditPerson);
+
+router.post('/edit/:id', personController.updatePerson);
 // Express POST route for delete
 router.post('/delete/:id', personController.deletePerson);
 

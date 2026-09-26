@@ -143,21 +143,21 @@
     <div class="grid grid-cols-2 gap-2">
 
    <!-- Edit Garden -->
+<!-- Edit Garden -->
 <button
     type="button"
     onclick='openEditGardenModal(
         "<%= garden._id %>",
         "<%= garden.gardenName %>",
-        "<%= garden.location || "" %>",
-        "<%= garden.areaSize || "" %>",
-        "<%= garden.cropType || "" %>"
+        "<%= garden.location %>",
+        "<%= garden.areaSize %>",
+        "<%= garden.cropType %>"
     )'
     class="bg-brandTeal/10 hover:bg-brandTeal border border-brandTeal/30 text-brandTeal hover:text-white py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
 
     <i class="fa-solid fa-pen-to-square"></i>
     <span>Edit</span>
 </button>
-
         <!-- Delete Garden -->
         <form
             action="/garden/delete/<%= garden._id %>"

@@ -82,6 +82,49 @@ exports.getPersonStatement = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
+// 5. Get Person for Edit
+exports.getEditPerson = async (req, res) => {
+    try {
+        const person = await Person.findById(req.params.id);
+
+        if (!person) {
+            return res.status(404).send("Person not found");
+        }
+
+        res.render('editPerson', { person });
+    } catch (error) {
+        console.error("Error in getEditPerson:", error);
+        res.status(500).send("Server Error");
+    }
+};
+
+// 5. Update Person
+exports.updatePerson = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, cnic, mobile } = req.body;
+
+        const person = await Person.findById(id);
+
+        if (!person) {
+            return res.status(404).send("Person not found");
+        }
+
+        person.name = name;
+        person.cnic = cnic;
+        person.mobile = mobile;
+
+        await person.save();
+
+        res.redirect('/person');
+    } catch (error) {
+        console.error("Update Person Error:", error);
+        res.status(500).send("Server Error");
+    }
+};
+
+
 // DELETE /person/:id
 exports.deletePerson = async (req, res) => {
     try {
@@ -97,6 +140,3 @@ exports.deletePerson = async (req, res) => {
         res.redirect('/person');
     }
 };
-
-
-
