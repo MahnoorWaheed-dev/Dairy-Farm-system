@@ -33,18 +33,25 @@ const addGarden = async (req, res) => {
 // Assign Lease (Theka) to Garden
 const assignLease = async (req, res) => {
     try {
-        const { gardenId, contractorId, contractorName, startDate, endDate, totalAmount, advanceAmount, notes } = req.body;
+        const {
+            gardenId,
+            contractorName,
+            startDate,
+            endDate,
+            totalAmount,
+            advanceAmount,
+            notes
+        } = req.body;
 
-        const person = await Person.findById(contractorId);
-        if (!person) return res.redirect('/garden');
-
-        // Agar user ne direct custom thekedar name enter kiya hai toh wo, warna Person account ka default name
-        const finalContractorName = contractorName && contractorName.trim() !== '' ? contractorName : person.name;
+        const finalContractorName =
+            contractorName && contractorName.trim() !== ''
+                ? contractorName.trim()
+                : 'Unknown Thekedar';
 
         await Garden.findByIdAndUpdate(gardenId, {
             status: 'On Lease',
             currentLease: {
-                contractor: contractorId,
+                contractor: null,
                 contractorName: finalContractorName,
                 startDate: new Date(startDate),
                 endDate: new Date(endDate),
@@ -54,26 +61,13 @@ const assignLease = async (req, res) => {
             }
         });
 
-        // Person account ledger entry (Khata person account)
-        if (person.transactions) {
-            person.transactions.push({
-                date: new Date(),
-                description: `Annual Garden Lease - ${finalContractorName}`,
-                debit: Number(totalAmount) || 0,
-                credit: Number(advanceAmount) || 0,
-                balance: (person.currentBalance || 0) + ((Number(totalAmount) || 0) - (Number(advanceAmount) || 0))
-            });
-            person.currentBalance = (person.currentBalance || 0) + ((Number(totalAmount) || 0) - (Number(advanceAmount) || 0));
-            await person.save();
-        }
-
         res.redirect('/garden');
+
     } catch (err) {
         console.error('Error assigning lease:', err);
         res.redirect('/garden');
     }
 };
-
 // Release / End Lease
 const releaseLease = async (req, res) => {
     try {

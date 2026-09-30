@@ -8,6 +8,9 @@ const dashboardController = require('./controllers/dashboardController');
 const gardenRoutes = require('./routes/gardenRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 
+const staffIncomeRoutes = require('./routes/staffIncomeRoutes');
+
+
 
 const app = express();
 
@@ -45,6 +48,7 @@ app.use('/', require('./routes/authRoutes'));
 app.use('/shops', require('./routes/shopRoutes'));
 // Mount routes
 app.use('/person', require('./routes/personRoutes'));
+app.use('/staff-income', staffIncomeRoutes);
 // Mount routes
 app.use('/garden', gardenRoutes);
 
