@@ -1,31 +1,72 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-
 const getLogin = (req, res) => {
-    if (req.session.isLoggedIn) return res.redirect('/dashboard');
-    res.render('login', { title: 'Login - Mangrio Shopping Centre' });
+    if (req.session && req.session.isLoggedIn) return res.redirect('/dashboard');
+    res.render('login', { title: 'Login - Mangrio Shopping Centre', error: null });
 };
 
-const postLogin = (req, res) => {
-    const { username, password } = req.body;
-    
-    if (username === 'admin' && password === '123456') {
-        req.session.isLoggedIn = true;
-        req.session.user = { username: 'Admin', role: 'Owner' };
-        return res.redirect('/dashboard');
-    }
+// ✅ FIXED: Ab ye Database aur Reset hue Naye Hashed Password se check karega
+const postLogin = async (req, res) => {
+    try {
+        let { username, password } = req.body;
+        username = username ? username.trim() : '';
 
-    res.render('login', { title: 'Login - Mangrio Shopping Centre' });
+        if (!username || !password) {
+            return res.render('login', { 
+                title: 'Login - Mangrio Shopping Centre', 
+                error: 'Please enter username and password!' 
+            });
+        }
+
+        // 1. Database se User dhoondein
+        const user = await User.findOne({ username: username });
+
+        if (!user) {
+            return res.render('login', { 
+                title: 'Login - Mangrio Shopping Centre', 
+                error: 'Invalid username or password!' 
+            });
+        }
+
+        // 2. Naya Reset Password DB ke Hashed Password se Verify karein
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.render('login', { 
+                title: 'Login - Mangrio Shopping Centre', 
+                error: 'Invalid username or password!' 
+            });
+        }
+
+        // 3. Match hone par Session Start karein
+        req.session.isLoggedIn = true;
+        req.session.user = { 
+            id: user._id, 
+            username: user.username, 
+            role: user.role 
+        };
+
+        return res.redirect('/dashboard');
+
+    } catch (err) {
+        console.error('Login Error:', err);
+        return res.render('login', { 
+            title: 'Login - Mangrio Shopping Centre', 
+            error: 'Server error during login.' 
+        });
+    }
 };
 
 const getLogout = (req, res) => {
-    req.session.destroy(() => {
+    if (req.session) {
+        req.session.destroy(() => {
+            res.redirect('/login');
+        });
+    } else {
         res.redirect('/login');
-    });
+    }
 };
-
-
 
 // 1. Render Forgot Password Page
 const getForgotPassword = (req, res) => {
@@ -75,7 +116,7 @@ const postForgotPassword = async (req, res) => {
         // Direct success response pass karein
         return res.render('forgotPassword', { 
             error: null, 
-            success: 'Password reset successfully! You can now login.' 
+            success: 'Password reset successfully! You can now login with your new password.' 
         });
 
     } catch (err) {
@@ -91,6 +132,6 @@ module.exports = {
     getLogin,
     postLogin,
     getLogout,
-     getForgotPassword,
+    getForgotPassword,
     postForgotPassword
 };
